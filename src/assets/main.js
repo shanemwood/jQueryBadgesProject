@@ -1,24 +1,38 @@
-$(function(){
+$(function() {
 
   $.ajax({
-    url: 'https://www.codeschool.com/users/2263001.json',
+    url: 'https://www.codeschool.com/users/2263001json',
     dataType: 'jsonp',
-    success: function(response) {
-      showBadges(response.courses.completed);
+    success: function(data) {
+      populateWithCourses(data.courses.completed)
     }
   });
 
-  var showBadges = function(queryData) {
+  function populateWithCourses(courses) {
 
-    var badges = $('#badges');
+    var $badges = $('#badges');
 
-    queryData.forEach(function(course){
-      
-      var div = $('<div />', {'class': 'course'}).appendTo(badges);
-      $('<h3 />', {text: course.title}).appendTo(div);
-      $('<img />', {src: course.badge}).appendTo(div);
-      $('<a />', {href: course.url, target: '_blank', 'class':'btn btn-primary', text: 'See Course'}).appendTo(div);
-    
+    courses.forEach(function(course) {
+
+      $div = $('<div />', {
+        'class': 'course'
+      }).appendTo($badges);
+
+      $('<h3 />', {
+        text: course.title
+      }).appendTo($div);
+
+      $('<img />', {
+        src: course.badge
+      }).appendTo($div);
+
+      $('<a />', {
+        'class': 'btn btn-primary',
+        target: '_blank',
+        href: course.url,
+        text: 'See Course'
+      }).appendTo($div);
+
     });
 
   }
